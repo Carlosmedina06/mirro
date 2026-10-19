@@ -1,0 +1,35 @@
+---
+title: ¿Qué es Mirro?
+slug: /intro
+---
+
+import MacWindow from '@site/src/components/MacWindow';
+
+**Mirro** es una app gratuita y open source para macOS que vive en la barra de estado y te permite ver y controlar la pantalla de tus teléfonos Android con un clic.
+
+<MacWindow name="welcome" alt="Pantalla de bienvenida de Mirro" width={620} />
+
+## Cómo funciona
+
+Por debajo, Mirro usa [scrcpy](https://github.com/Genymobile/scrcpy), un proyecto open source de Genymobile que transmite la pantalla del teléfono a la Mac con muy poca latencia y te deja usarlo con el teclado y el ratón.
+
+Mirro le pone una interfaz nativa encima:
+
+- Un **menú en la barra de estado** para duplicar cualquier dispositivo en un clic.
+- Una **ventana** con todos tus dispositivos, su estado, batería y versión de Android.
+- Un **onboarding** que te guía para activar la depuración USB.
+- **Conexión por WiFi** sin tener que escribir comandos.
+
+scrcpy y `adb` vienen incluidos dentro de la app, así que no hace falta instalar nada más.
+
+## Requisitos
+
+- macOS 13 Ventura o posterior
+- Una Mac con Apple Silicon o Intel
+- Un teléfono Android 5.0 o posterior con la [depuración USB](./preparar-telefono) activada
+
+## Siguientes pasos
+
+1. [Instala Mirro](./instalacion)
+2. [Prepara tu teléfono](./preparar-telefono)
+3. [Empieza a duplicar](./uso)

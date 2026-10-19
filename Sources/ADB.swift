@@ -66,6 +66,10 @@ enum Tools {
 
     @discardableResult
     static func run(_ launchPath: String, _ args: [String]) -> String {
+        runWithStatus(launchPath, args).output
+    }
+
+    static func runWithStatus(_ launchPath: String, _ args: [String]) -> (output: String, status: Int32) {
         let p = Process()
         p.executableURL = URL(fileURLWithPath: launchPath)
         p.arguments = args
@@ -73,10 +77,10 @@ enum Tools {
         p.standardOutput = pipe
         p.standardError = pipe
         p.standardInput = FileHandle.nullDevice
-        do { try p.run() } catch { return "" }
+        do { try p.run() } catch { return ("", -1) }
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
         p.waitUntilExit()
-        return String(data: data, encoding: .utf8) ?? ""
+        return (String(data: data, encoding: .utf8) ?? "", p.terminationStatus)
     }
 
     static func listDevices() -> [AndroidDevice] {
@@ -94,8 +98,10 @@ enum Tools {
 
     static func details(_ serial: String) -> DeviceDetails {
         guard let adb else { return DeviceDetails() }
-        let out = run(adb, ["-s", serial, "shell",
-                            "getprop ro.product.manufacturer; getprop ro.build.version.release; dumpsys battery | grep -m1 level"])
+        // "; true" para que el código de salida solo refleje errores de adb (p. ej. el dispositivo se desconectó)
+        let (out, status) = runWithStatus(adb, ["-s", serial, "shell",
+            "getprop ro.product.manufacturer; getprop ro.build.version.release; dumpsys battery | grep -m1 level; true"])
+        guard status == 0 else { return DeviceDetails() }
         let lines = out.split(separator: "\n", omittingEmptySubsequences: false)
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
         var d = DeviceDetails()

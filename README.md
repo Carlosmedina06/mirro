@@ -8,6 +8,10 @@
   Duplica y controla tus teléfonos Android desde la barra de estado de tu Mac.
 </p>
 
+<p align="center">
+  <a href="https://carlosmedina06.github.io/mirro/"><b>Web y documentación</b></a>
+</p>
+
 ---
 
 Mirro es una app nativa de macOS que vive en la barra de estado y te permite ver y usar la pantalla de tus dispositivos Android con un clic. Por debajo usa [scrcpy](https://github.com/Genymobile/scrcpy), que ya viene incluido: no hay que instalar nada más.
@@ -77,6 +81,7 @@ Sources/          Código de la app (Swift + SwiftUI)
 Resources/        Icono de la app
 scripts/          Compilar, publicar y regenerar el icono
 install.sh        Instalador de una línea
+website/          Web y documentación (Docusaurus)
 ```
 
 ### Comandos

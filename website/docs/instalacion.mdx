@@ -1,0 +1,71 @@
+---
+title: Instalación
+---
+
+import InstallCommand from '@site/src/components/InstallCommand';
+
+## Recomendado: desde Terminal
+
+Abre **Terminal** y ejecuta:
+
+<InstallCommand />
+
+<br />
+
+El instalador:
+
+1. Comprueba que tu Mac tenga macOS 13 o posterior.
+2. Descarga la última versión desde [GitHub Releases](https://github.com/carlosmedina06/mirro/releases/latest).
+3. Verifica su checksum SHA-256.
+4. La instala en `/Applications` (o en `~/Applications` si no tienes permisos) y la abre.
+
+Puedes [leer el script](https://github.com/carlosmedina06/mirro/blob/main/install.sh) antes de ejecutarlo.
+
+:::tip[Actualizar]
+Para actualizar a la última versión, vuelve a ejecutar el mismo comando.
+:::
+
+## Descarga directa
+
+1. Descarga `Mirro-x.y.z.zip` desde [Releases](https://github.com/carlosmedina06/mirro/releases/latest).
+2. Descomprímelo y mueve **Mirro.app** a `/Applications`.
+
+:::warning[La primera vez macOS la bloquea]
+Mirro todavía no está notarizada por Apple, así que al descargarla desde el navegador macOS muestra el aviso *«Apple no pudo verificar que Mirro no contenga software malicioso»*. Para abrirla:
+
+1. Intenta abrir Mirro y cierra el aviso.
+2. Ve a **Ajustes del Sistema › Privacidad y seguridad**.
+3. Abajo, junto a *«Se bloqueó Mirro»*, pulsa **Abrir igualmente**.
+
+O desde Terminal:
+
+```bash
+xattr -dr com.apple.quarantine /Applications/Mirro.app
+```
+
+Solo hace falta una vez. Con el instalador de Terminal esto no ocurre.
+:::
+
+## Opciones del instalador
+
+Puedes ajustar el instalador con variables de entorno:
+
+| Variable | Qué hace |
+| --- | --- |
+| `MIRRO_VERSION=1.0.0` | Instala una versión concreta en lugar de la última |
+| `MIRRO_INSTALL_DIR=~/Apps` | Instala en otra carpeta |
+| `MIRRO_NO_OPEN=1` | No abre la app al terminar |
+
+Por ejemplo:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/carlosmedina06/mirro/main/install.sh | MIRRO_VERSION=1.0.0 bash
+```
+
+## Desinstalar
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/carlosmedina06/mirro/main/install.sh | bash -s -- --uninstall
+```
+
+Esto cierra Mirro, elimina la app y borra sus preferencias. Si activaste *Abrir al iniciar sesión*, desactívalo antes desde los ajustes de Mirro.

@@ -1,0 +1,71 @@
+---
+title: Uso
+---
+
+import MacWindow from '@site/src/components/MacWindow';
+
+## La barra de estado
+
+Mirro vive en la barra de estado. Al hacer clic en su icono verás tus dispositivos conectados; haz clic en uno para empezar a duplicarlo y otra vez para detenerlo.
+
+El icono cambia según el estado:
+
+| Icono | Significa |
+| --- | --- |
+| Teléfono en contorno con ondas | Mirro está lista |
+| Teléfono relleno | Hay al menos un dispositivo duplicándose (con más de uno, verás cuántos al lado) |
+| Teléfono con «!» | Falta algún componente de la app; abre Mirro para ver qué pasa |
+
+Desde el menú también puedes **Duplicar todos**, **Detener todos**, cambiar las [opciones](./opciones) y abrir la ventana principal con **Abrir Mirro…** (<kbd>⌘</kbd> <kbd>O</kbd>).
+
+## La ventana principal
+
+<MacWindow name="devices" alt="Lista de dispositivos en Mirro" width={680} />
+
+<br />
+
+Cada dispositivo muestra su modelo, marca, versión de Android, batería y si está conectado por USB o WiFi. Desde aquí puedes:
+
+- **Duplicar / Detener** cada dispositivo.
+- **Duplicar todos** cuando hay más de uno conectado.
+- Abrir el menú **⋯** para activar o desconectar el WiFi.
+
+La lista se actualiza sola mientras la ventana está abierta. Al cerrarla, Mirro sigue funcionando en la barra de estado.
+
+## Conectar por WiFi
+
+### Desde un teléfono conectado por USB
+
+1. Conecta el teléfono por USB. El teléfono y la Mac deben estar en la misma red WiFi.
+2. En la ventana de Mirro, abre el menú **⋯** del dispositivo y elige **Activar conexión WiFi**.
+3. Cuando aparezca el dispositivo con el icono de WiFi, ya puedes desconectar el cable.
+
+### Escribiendo la IP
+
+Si el teléfono ya tiene adb por WiFi activado (puerto 5555), escribe su IP en el campo de abajo de la ventana, por ejemplo `192.168.1.20:5555`, y pulsa **Conectar**.
+
+:::note
+La conexión WiFi se pierde si el teléfono se reinicia. Vuelve a conectarlo por USB y repite el paso 2.
+:::
+
+## Controlar el teléfono
+
+En la ventana del teléfono puedes usar el ratón y el teclado como si tocaras la pantalla. Además, scrcpy tiene atajos útiles (<kbd>⌘</kbd> es la tecla Comando izquierda):
+
+| Atajo | Acción |
+| --- | --- |
+| <kbd>⌘</kbd> <kbd>H</kbd> o clic central | Inicio |
+| <kbd>⌘</kbd> <kbd>B</kbd> o clic derecho | Atrás |
+| <kbd>⌘</kbd> <kbd>S</kbd> | Apps recientes |
+| <kbd>⌘</kbd> <kbd>P</kbd> | Botón de encendido |
+| <kbd>⌘</kbd> <kbd>↑</kbd> / <kbd>↓</kbd> | Subir / bajar volumen |
+| <kbd>⌘</kbd> <kbd>R</kbd> | Girar la pantalla |
+| <kbd>⌘</kbd> <kbd>F</kbd> | Pantalla completa |
+| <kbd>⌘</kbd> <kbd>N</kbd> | Abrir notificaciones |
+| <kbd>⌘</kbd> <kbd>O</kbd> | Apagar la pantalla del teléfono (sigue duplicándose) |
+| <kbd>⌘</kbd> <kbd>C</kbd> / <kbd>⌘</kbd> <kbd>V</kbd> | Copiar / pegar entre la Mac y el teléfono |
+| <kbd>⌘</kbd> <kbd>G</kbd> | Tamaño 1:1 |
+
+También puedes **arrastrar un `.apk`** a la ventana para instalarlo, o cualquier otro archivo para copiarlo a la carpeta *Download* del teléfono.
+
+La lista completa está en la [documentación de scrcpy](https://github.com/Genymobile/scrcpy/blob/master/doc/shortcuts.md).

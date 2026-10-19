@@ -1,0 +1,132 @@
+.hero {
+  padding: 5rem 0 3rem;
+  text-align: center;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(61, 220, 151, 0.18), transparent 70%),
+    var(--ifm-background-color);
+}
+
+.logo {
+  width: 128px;
+  height: 128px;
+  filter: drop-shadow(0 12px 24px rgba(10, 92, 85, 0.3));
+}
+
+.title {
+  font-size: clamp(2.6rem, 6vw, 4rem);
+  margin: 1rem 0 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.tagline {
+  font-size: clamp(1.1rem, 2.4vw, 1.4rem);
+  max-width: 620px;
+  margin: 0 auto 2rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1.75rem;
+}
+
+.meta {
+  margin: 1.25rem 0 0;
+  font-size: 0.9rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.screenshot {
+  padding: 1rem 0 4rem;
+}
+
+.section {
+  padding: 4rem 0;
+}
+
+.alt {
+  background: var(--ifm-color-emphasis-100);
+}
+
+.sectionTitle {
+  text-align: center;
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  margin-bottom: 2.5rem;
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem 2.5rem;
+}
+
+.feature h3 {
+  margin: 0.75rem 0 0.4rem;
+  font-size: 1.1rem;
+}
+
+.feature p {
+  margin: 0;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.featureIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  color: var(--ifm-color-primary);
+  background: rgba(15, 158, 120, 0.12);
+}
+
+.steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  counter-reset: none;
+}
+
+.step {
+  text-align: center;
+}
+
+.step h3 {
+  margin: 0.9rem 0 0.4rem;
+  font-size: 1.1rem;
+}
+
+.step p {
+  margin: 0 auto;
+  max-width: 280px;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.stepNumber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-weight: 700;
+  color: #fff;
+  background: #0f9e78;
+}
+
+.credits {
+  max-width: 680px;
+  text-align: center;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.credits p {
+  margin: 0;
+}
