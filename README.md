@@ -24,39 +24,33 @@ Mirro es una app nativa de macOS que vive en la barra de estado y te permite ver
 
 ## Instalación
 
-### Homebrew
+### Recomendado: Terminal
 
 ```sh
-brew install --cask carlosmedina06/tap/mirro
+curl -fsSL https://raw.githubusercontent.com/carlosmedina06/mirro/main/install.sh | bash
+```
+
+Descarga la última versión desde [Releases](https://github.com/carlosmedina06/mirro/releases/latest), verifica su checksum, la instala en `/Applications` y la abre. Puedes [leer el script](install.sh) antes de ejecutarlo. Para actualizar, vuelve a ejecutar el mismo comando.
+
+Para desinstalar:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/carlosmedina06/mirro/main/install.sh | bash -s -- --uninstall
 ```
 
 ### Descarga directa
 
 Descarga `Mirro-x.y.z.zip` desde [Releases](https://github.com/carlosmedina06/mirro/releases/latest), descomprímelo y mueve **Mirro.app** a `/Applications`.
 
-### Primera apertura
-
-Mirro todavía no está notarizada por Apple, así que la primera vez macOS la bloquea con el aviso *«Apple no pudo verificar…»*. Para abrirla:
-
-1. Intenta abrir Mirro y cierra el aviso.
-2. Ve a **Ajustes del Sistema › Privacidad y seguridad**.
-3. Abajo, junto a *«Se bloqueó Mirro»*, pulsa **Abrir igualmente**.
-
-O desde Terminal:
-
-```sh
-xattr -dr com.apple.quarantine /Applications/Mirro.app
-```
-
-Solo hace falta una vez.
+> **Si usaste la descarga directa:** Mirro todavía no está notarizada por Apple, así que la primera vez macOS la bloquea con el aviso *«Apple no pudo verificar…»*. Intenta abrirla, cierra el aviso y ve a **Ajustes del Sistema › Privacidad y seguridad › Abrir igualmente**. O ejecuta `xattr -dr com.apple.quarantine /Applications/Mirro.app`. Solo hace falta una vez. Con el instalador de Terminal no ocurre.
 
 ## Requisitos
 
 - macOS 13 Ventura o posterior
-- Mac con Apple Silicon
+- Mac con Apple Silicon o Intel
 - Un teléfono Android con la **depuración USB** activada (Mirro te explica cómo)
 
-Si ya tienes `adb` instalado (Android Studio, Homebrew), Mirro usa ese para no interferir con tus herramientas. Si no, usa el que trae incluido.
+Si ya tienes `adb` instalado (por ejemplo, con Android Studio), Mirro usa ese para no interferir con tus herramientas. Si no, usa el que trae incluido.
 
 ## Compilar desde el código
 
@@ -81,7 +75,8 @@ cd mirro
 | `Sources/Tools.swift` | Llamadas a adb |
 | `Sources/StatusIcon.swift` | Icono de la barra de estado |
 | `Tools/make-icon.swift` | Genera el icono de la app |
-| `release.sh` | Crea el `.zip` del release y actualiza el cask |
+| `release.sh` | Crea el `.zip` del release y su checksum |
+| `install.sh` | Instalador de una línea |
 
 ## Créditos
 

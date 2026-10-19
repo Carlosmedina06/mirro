@@ -9,7 +9,11 @@ APP="build/$NAME.app"
 rm -rf build
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 
-swiftc -O -target arm64-apple-macos13 Sources/*.swift -o "$APP/Contents/MacOS/$NAME"
+# Binario universal: Apple Silicon + Intel
+for arch in arm64 x86_64; do
+    swiftc -O -target $arch-apple-macos13 Sources/*.swift -o "build/$NAME-$arch"
+done
+lipo -create "build/$NAME-arm64" "build/$NAME-x86_64" -output "$APP/Contents/MacOS/$NAME"
 
 # Icono: dibuja el PNG maestro y genera todos los tamaños del .icns
 ICONSET="build/AppIcon.iconset"
@@ -24,19 +28,26 @@ iconutil -c icns "$ICONSET" -o "$APP/Contents/Resources/AppIcon.icns"
 # scrcpy oficial (Apache 2.0) empaquetado dentro de la app: no hay que instalar nada.
 # Se descarga una vez a vendor/ y se verifica contra el SHA-256 publicado.
 SCRCPY_VERSION="5.0.1"
-SCRCPY_SHA256="33611e51977a8289e2e124b220f727895181ef2eb9060e0987a4dc2db9cf0d6b"
-SCRCPY_TGZ="vendor/scrcpy-macos-aarch64-v$SCRCPY_VERSION.tar.gz"
-if [[ ! -f "$SCRCPY_TGZ" ]]; then
-    mkdir -p vendor
-    curl -fsSL -o "$SCRCPY_TGZ.part" \
-        "https://github.com/Genymobile/scrcpy/releases/download/v$SCRCPY_VERSION/scrcpy-macos-aarch64-v$SCRCPY_VERSION.tar.gz"
-    mv "$SCRCPY_TGZ.part" "$SCRCPY_TGZ"
-fi
-echo "$SCRCPY_SHA256  $SCRCPY_TGZ" | shasum -a 256 -c --quiet || { echo "✗ checksum de scrcpy no coincide"; rm -f "$SCRCPY_TGZ"; exit 1; }
-mkdir -p build/scrcpy "$APP/Contents/Resources/bin"
-tar -xzf "$SCRCPY_TGZ" -C build/scrcpy --strip-components 1
-for f in scrcpy scrcpy-server adb scrcpy.png disconnected.png LICENSE; do
-    cp "build/scrcpy/$f" "$APP/Contents/Resources/bin/"
+typeset -A SCRCPY_SHA256=(
+    aarch64 33611e51977a8289e2e124b220f727895181ef2eb9060e0987a4dc2db9cf0d6b
+    x86_64  31a5467a9e907f162b093267cbbab1276b15c6e709c2ea8159566a8d165beb50
+)
+mkdir -p vendor "$APP/Contents/Resources/bin"
+for arch in aarch64 x86_64; do
+    tgz="vendor/scrcpy-macos-$arch-v$SCRCPY_VERSION.tar.gz"
+    if [[ ! -f "$tgz" ]]; then
+        curl -fsSL -o "$tgz.part" \
+            "https://github.com/Genymobile/scrcpy/releases/download/v$SCRCPY_VERSION/scrcpy-macos-$arch-v$SCRCPY_VERSION.tar.gz"
+        mv "$tgz.part" "$tgz"
+    fi
+    echo "${SCRCPY_SHA256[$arch]}  $tgz" | shasum -a 256 -c --quiet || { echo "✗ checksum de scrcpy ($arch) no coincide"; rm -f "$tgz"; exit 1; }
+    mkdir -p "build/scrcpy-$arch"
+    tar -xzf "$tgz" -C "build/scrcpy-$arch" --strip-components 1
+done
+# scrcpy viene por arquitectura; scrcpy-server y adb (ya universal) son idénticos en ambas
+lipo -create build/scrcpy-aarch64/scrcpy build/scrcpy-x86_64/scrcpy -output "$APP/Contents/Resources/bin/scrcpy"
+for f in scrcpy-server adb scrcpy.png disconnected.png LICENSE; do
+    cp "build/scrcpy-aarch64/$f" "$APP/Contents/Resources/bin/"
 done
 xattr -cr "$APP/Contents/Resources/bin"
 
