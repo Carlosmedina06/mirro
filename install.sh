@@ -68,7 +68,7 @@ main() {
     local version="${MIRRO_VERSION:-}"
     if [[ -z "$version" ]]; then
         version=$(curl -fsSL "https://api.github.com/repos/$REPO/releases/latest" \
-            | sed -n 's/.*"tag_name": *"v\{0,1\}\([^"]*\)".*/\1/p' | head -1)
+            | sed -n 's/.*"tag_name": *"v\{0,1\}\([^"]*\)".*/\1/p' | head -1) || true
         [[ -n "$version" ]] || fail "No se pudo obtener la última versión desde GitHub"
     fi
     info "Versión $version"
