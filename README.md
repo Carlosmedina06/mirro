@@ -59,24 +59,37 @@ Solo necesitas las Command Line Tools de Xcode (`xcode-select --install`).
 ```sh
 git clone https://github.com/carlosmedina06/mirro.git
 cd mirro
-./build.sh            # genera build/Mirro.app
-./build.sh --install  # además la copia a /Applications
+make          # genera build/Mirro.app (universal: Apple Silicon + Intel)
+make install  # además la copia a /Applications
 ```
 
-`build.sh` descarga la build oficial de scrcpy para macOS y verifica su SHA-256 antes de empaquetarla.
+La compilación descarga las builds oficiales de scrcpy para macOS y verifica su SHA-256 antes de empaquetarlas.
 
 ### Estructura
 
-| Archivo | Qué hace |
+```
+Sources/          Código de la app (Swift + SwiftUI)
+  main.swift        Barra de estado y ventana
+  Model.swift       Estado compartido y sesiones de scrcpy
+  Views.swift       Interfaz
+  ADB.swift         Dispositivos y llamadas a adb
+  StatusIcon.swift  Icono de la barra de estado
+Resources/        Icono de la app
+scripts/          Compilar, publicar y regenerar el icono
+install.sh        Instalador de una línea
+```
+
+### Comandos
+
+| Comando | Qué hace |
 | --- | --- |
-| `Sources/main.swift` | Barra de estado y ventana |
-| `Sources/Model.swift` | Estado compartido, sesiones de scrcpy |
-| `Sources/Views.swift` | Interfaz en SwiftUI |
-| `Sources/Tools.swift` | Llamadas a adb |
-| `Sources/StatusIcon.swift` | Icono de la barra de estado |
-| `Tools/make-icon.swift` | Genera el icono de la app |
-| `release.sh` | Crea el `.zip` del release y su checksum |
-| `install.sh` | Instalador de una línea |
+| `make` | Compila `build/Mirro.app` |
+| `make install` | Compila e instala en `/Applications` |
+| `make release` | Genera `dist/Mirro-x.y.z.zip` y su `.sha256` para GitHub Releases |
+| `make icon` | Regenera el icono desde `scripts/icon.swift` |
+| `make clean` | Borra `build/` y `dist/` |
+
+La versión se define en `scripts/build.sh` (`VERSION`).
 
 ## Créditos
 

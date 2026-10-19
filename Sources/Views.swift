@@ -35,9 +35,9 @@ struct OnboardingView: View {
 
     enum Step: Int, CaseIterable { case welcome, phone }
 
-    init(model: AppModel, step: Step = .welcome) {
+    init(model: AppModel) {
         self.model = model
-        _step = State(initialValue: step)
+        _step = State(initialValue: .welcome)
     }
 
     var body: some View {

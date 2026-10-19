@@ -1,7 +1,7 @@
 #!/bin/zsh
-# Compila Mirro.app. Uso: ./build.sh [--install]
+# Compila build/Mirro.app. Uso: scripts/build.sh [--install]  (o: make / make install)
 set -euo pipefail
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/.."
 
 NAME="Mirro"
 VERSION="1.0.0"
@@ -15,15 +15,8 @@ for arch in arm64 x86_64; do
 done
 lipo -create "build/$NAME-arm64" "build/$NAME-x86_64" -output "$APP/Contents/MacOS/$NAME"
 
-# Icono: dibuja el PNG maestro y genera todos los tamaños del .icns
-ICONSET="build/AppIcon.iconset"
-mkdir -p "$ICONSET"
-swift Tools/make-icon.swift build/icon-1024.png >/dev/null
-for s in 16 32 128 256 512; do
-    sips -z $s $s build/icon-1024.png --out "$ICONSET/icon_${s}x${s}.png" >/dev/null
-    sips -z $((s*2)) $((s*2)) build/icon-1024.png --out "$ICONSET/icon_${s}x${s}@2x.png" >/dev/null
-done
-iconutil -c icns "$ICONSET" -o "$APP/Contents/Resources/AppIcon.icns"
+# Icono ya generado (para cambiarlo: make icon)
+cp Resources/AppIcon.icns "$APP/Contents/Resources/"
 
 # scrcpy oficial (Apache 2.0) empaquetado dentro de la app: no hay que instalar nada.
 # Se descarga una vez a vendor/ y se verifica contra el SHA-256 publicado.

@@ -1,15 +1,15 @@
 #!/bin/zsh
 # Genera el .zip y su checksum para GitHub Releases.
-# Uso: ./release.sh
+# Uso: scripts/release.sh  (o: make release)
 set -euo pipefail
-cd "$(dirname "$0")"
+cd "$(dirname "$0")/.."
 
 GITHUB_USER="carlosmedina06"
 
-VERSION=$(grep '^VERSION=' build.sh | cut -d'"' -f2)
+VERSION=$(grep '^VERSION=' scripts/build.sh | cut -d'"' -f2)
 ZIP="dist/Mirro-$VERSION.zip"
 
-./build.sh
+scripts/build.sh
 rm -rf dist && mkdir dist
 ditto -c -k --sequesterRsrc --keepParent build/Mirro.app "$ZIP"
 (cd dist && shasum -a 256 "$(basename "$ZIP")" > "$(basename "$ZIP").sha256")

@@ -1,4 +1,4 @@
-// Genera el icono de Mirro (1024x1024 PNG). Uso: swift Tools/make-icon.swift salida.png
+// Dibuja el icono de Mirro (1024x1024 PNG). Lo usa scripts/make-icon.sh (make icon).
 import AppKit
 
 let size: CGFloat = 1024
